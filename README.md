@@ -1,179 +1,93 @@
-🛡️ KatIPAuth
+# 🛡️ KatIPAuth
 
-cracked server problems require cracked server solutions
+> cracked server problems require cracked server solutions
 
-KatIPAuth is a Paper plugin for Minecraft 1.21.x that locks accounts to IPs so little gremlins can’t just change usernames and steal accounts.
-No passwords. No auth plugins. Just IP says yes or go home.
+**KatIPAuth** is a Paper plugin for **Minecraft 1.21.x** that locks accounts to IPs so little gremlins can’t just change usernames and steal accounts.  
+No passwords. No auth plugins. Just **IP says yes or go home**.
 
 Built for cracked servers. Optimized. Async. Doesn’t freeze your server like half the plugins on Spigot.
 
-🚀 What This Plugin Does (aka why this exists)
+---
+
+## 🚀 What This Plugin Does (aka why this exists)
 
 Cracked servers have one big issue:
 
-usernames are free real estate
+> usernames are free real estate
 
-KatIPAuth fixes that by binding each username to an IP address.
+KatIPAuth fixes that by **binding each username to an IP address**.
 
-Core behavior
+### Core behavior
+- First join → IP gets saved
+- Next joins → must be same IP
+- Different IP?
+  - ❌ Login blocked **before they enter**
+  - 📢 Discord webhook alert gets fired
+  - 🧍 Player stays OUT. No spawn, no chunks, no funny business
 
-First join → IP gets saved
+---
 
-Next joins → must be same IP
+## 🔐 Features
 
-Different IP?
+### 👤 Player Protection
+- Automatic IP binding on first join
+- Zero setup for players
+- Login blocked instantly on mismatch
 
-❌ Login blocked before they enter
-
-📢 Discord webhook alert gets fired
-
-🧍 Player stays OUT. No spawn, no chunks, no funny business
-
-🔐 Features
-👤 Player Protection
-
-Automatic IP binding on first join
-
-Zero setup for players
-
-Login blocked instantly on mismatch
-
-📡 Discord Alerts (cool embeds, not ugly spam)
-
+### 📡 Discord Alerts (cool embeds, not ugly spam)
 Sends a clean embed with:
-
-Player username
-
-Stored IP
-
-Attempted IP
-
-Timestamp
-
-Server name
+- Player username
+- Stored IP
+- Attempted IP
+- Timestamp
+- Server name  
 
 So you can watch account theft attempts like a Netflix series.
 
-⚡ Performance
+### ⚡ Performance
+- **Async disk I/O**
+- **Async webhook requests**
+- Never blocks the main thread
+- Safe on restarts and reloads
 
-Async disk I/O
+---
 
-Async webhook requests
+## 🧾 Commands
 
-Never blocks the main thread
+### Player Commands
 
-Safe on restarts and reloads
+#### /ipreset
+- Resets your IP binding
+- Instantly kicks you
+- Next login = new IP bound
+#### /ipstatus
+- Shows if your IP is bound
+- Shows **when** it was bound
+- Does NOT leak your IP (privacy W)
 
-🧾 Commands
-Player Commands
-/ipreset
+---
 
+### Admin Commands (OP only, no funny business)
 
-Resets your IP binding
+#### /ipinfo <player>
+- Shows stored IP
+- Shows last bind/login time
+#### /ipforce <player>
+- Removes IP binding
+- Does NOT kick the player
+#### /ipreload
+- Reloads config + Discord webhook
+- No restart needed because we’re civilized
 
-Instantly kicks you
+---
 
-Next login = new IP bound
+## ⚙️ Configuration
 
-/ipstatus
+`plugins/KatIPAuth/config.yml`
 
-
-Shows if your IP is bound
-
-Shows when it was bound
-
-Does NOT leak your IP (privacy W)
-
-Admin Commands (OP only, no funny business)
-/ipinfo <player>
-
-
-Shows stored IP
-
-Shows last bind/login time
-
-/ipforce <player>
-
-
-Removes IP binding
-
-Does NOT kick the player
-
-/ipreload
-
-
-Reloads config + Discord webhook
-
-No restart needed because we’re civilized
-
-⚙️ Configuration
-
-plugins/KatIPAuth/config.yml
-
+```yaml
 discord:
   webhook: "YOUR_DISCORD_WEBHOOK_URL"
 
 messages:
   blocked: "&cLogin blocked: IP mismatch. Contact staff if this is wrong."
-
-
-Yes, it auto-generates.
-No, you don’t need to touch anything else.
-
-📁 Data Storage
-
-JSON-based storage
-
-One file, human-readable
-
-Handles:
-
-First joins
-
-Missing files
-
-Corrupted data (won’t brick your server)
-
-🧪 Compatibility
-
-✅ Paper 1.21.x
-
-✅ Java 21
-
-❌ Spigot (use Paper, it’s 2026)
-
-❌ Fabric (wrong ecosystem bro)
-
-❓ FAQ
-
-Q: Can VPNs bypass this?
-A: VPN users get blocked unless they reset IP. That’s the point.
-
-Q: Can two people share one IP?
-A: Yes. Same IP ≠ same username. This is IP → username, not the other way around.
-
-Q: Is this better than AuthMe?
-A: Different goal. AuthMe = passwords.
-KatIPAuth = identity locking.
-Use both if you’re paranoid.
-
-🧠 Why This Exists
-
-Because cracked servers are chaos
-and chaos needs rules.
-
-🧑‍💻 Author
-
-Made by kat
-Powered by Java 21
-Fueled by annoyance
-
-If you want, I can also:
-
-Add a logo
-
-Write a SpigotMC description
-
-Make a changelog
-
-Or roast your friends for trying to bypass it
