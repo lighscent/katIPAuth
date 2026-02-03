@@ -97,12 +97,12 @@ messages:
 ## ❓ FAQ
 
 ### Q: Can VPNs bypass this?
-### A: VPN users get blocked unless they reset IP. That’s the point.
+- A: VPN users get blocked unless they reset IP. That’s the point.
 
 ### Q: Can two people share one IP?
-### A: Yes. Same IP ≠ same username. This is IP → username, not the other way around.
+- A: Yes. Same IP ≠ same username. This is IP → username, not the other way around.
 
 ### Q: Is this better than AuthMe?
-### A: Different goal. AuthMe = passwords.
-### KatIPAuth = identity locking.
-### Use both if you’re paranoid lmao.
+- A: Different goal. AuthMe = passwords.
+- KatIPAuth = identity locking using yo ip.
+- Use both if you’re paranoid lmao.
