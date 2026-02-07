@@ -1,3 +1,5 @@
+![CurseForge Downloads](https://img.shields.io/curseforge/dt/1452817?label=CurseForge%20dl)
+
 # 🛡️ KatIPAuth (KIA)
 
 **KatIPAuth** is a Paper plugin for **Minecraft 1.21.x** that locks accounts to IPs so little gremlins can’t just hack accounts and use them.  
