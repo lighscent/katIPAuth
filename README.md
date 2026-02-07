@@ -1,19 +1,17 @@
 # 🛡️ KatIPAuth (KIA)
 
-> cracked server problems require cracked server solutions
-
-**KatIPAuth** is a Paper plugin for **Minecraft 1.21.x** that locks accounts to IPs so little gremlins can’t just change usernames and steal accounts.  
+**KatIPAuth** is a Paper plugin for **Minecraft 1.21.x** that locks accounts to IPs so little gremlins can’t just hack accounts and use them.  
 No passwords. No auth plugins. Just **IP says yes or go home**.
 
-Built for cracked servers. Optimized. Async. Doesn’t freeze your server like half the plugins on Spigot.
+Built for speed. Optimized. Async. Doesn’t freeze your server like half the plugins on Spigot.
 
 ---
 
 ## 🚀 What This Plugin Does (aka why this exists)
 
-Cracked servers have one big issue:
+servers have one big issue:
 
-> usernames are free real estate
+> upon a account being hacked, its achievements are obtained unfairly
 
 KatIPAuth fixes that by **binding each username to an IP address**.
 
