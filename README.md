@@ -1,4 +1,5 @@
-![CurseForge Downloads](https://img.shields.io/curseforge/dt/1452817?label=CurseForge%20dl)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/MOD_ID?label=Modrinth%20dl)
+
 
 # 🛡️ KatIPAuth (KIA)
 
