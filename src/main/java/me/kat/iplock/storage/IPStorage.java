@@ -4,19 +4,29 @@ import com.google.gson.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class IPStorage {
 
-    public record Entry(String ip, long time) {}
+    public record Entry(String ip, long time) {
+    }
 
+    private final JavaPlugin plugin;
     private final File file;
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final Map<String, Entry> data = new ConcurrentHashMap<>();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public IPStorage(JavaPlugin plugin) {
+        this.plugin = plugin;
         this.file = new File(plugin.getDataFolder(), "ips.json");
     }
 
@@ -35,20 +45,37 @@ public class IPStorage {
     }
 
     public void load() {
-        if (!file.exists()) return;
+        if (!file.exists())
+            return;
 
         try (Reader r = new FileReader(file)) {
-            JsonObject obj = JsonParser.parseReader(r).getAsJsonObject();
+            JsonElement element = JsonParser.parseReader(r);
+            if (element == null || !element.isJsonObject())
+                return;
+
+            JsonObject obj = element.getAsJsonObject();
             obj.entrySet().forEach(e -> {
-                JsonObject v = e.getValue().getAsJsonObject();
-                data.put(e.getKey(),
-                        new Entry(v.get("ip").getAsString(), v.get("time").getAsLong()));
+                try {
+                    JsonObject v = e.getValue().getAsJsonObject();
+                    data.put(e.getKey(),
+                            new Entry(v.get("ip").getAsString(), v.get("time").getAsLong()));
+                } catch (Exception ex) {
+                    plugin.getLogger().log(Level.WARNING, "Failed to load entry for " + e.getKey(), ex);
+                }
             });
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Could not load ips.json", e);
+        }
     }
 
     public void save() {
-        try (Writer w = new FileWriter(file)) {
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
+        File tempFile = new File(parent, "ips.json.tmp");
+        try (Writer w = new FileWriter(tempFile)) {
             JsonObject obj = new JsonObject();
             data.forEach((k, v) -> {
                 JsonObject o = new JsonObject();
@@ -57,10 +84,36 @@ public class IPStorage {
                 obj.add(k, o);
             });
             gson.toJson(obj, w);
-        } catch (Exception ignored) {}
+            w.flush();
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Failed to write ips.json.tmp", e);
+            return;
+        }
+
+        try {
+            Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.ATOMIC_MOVE);
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, "Failed to move ips.json.tmp to ips.json", e);
+        }
     }
 
     private void saveAsync() {
-        new Thread(this::save).start();
+        if (!executor.isShutdown()) {
+            executor.submit(this::save);
+        }
+    }
+
+    public void shutdown() {
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+        save();
     }
 }
