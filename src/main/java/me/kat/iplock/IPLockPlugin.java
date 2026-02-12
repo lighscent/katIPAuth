@@ -18,8 +18,7 @@ public class IPLockPlugin extends JavaPlugin {
         storage.load();
 
         getServer().getPluginManager().registerEvents(
-                new PreLoginListener(storage), this
-        );
+                new PreLoginListener(storage), this);
 
         getCommand("ipreset").setExecutor(new me.kat.iplock.command.IPResetCommand(storage));
         getCommand("ipstatus").setExecutor(new me.kat.iplock.command.IPStatusCommand(storage));
@@ -30,7 +29,7 @@ public class IPLockPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        storage.save();
+        storage.shutdown();
     }
 
     public static IPLockPlugin get() {
