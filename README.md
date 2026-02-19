@@ -1,9 +1,16 @@
 # 🛡️ KatIPAuth (KIA)
 
-**KatIPAuth** is a Paper plugin for **Minecraft 1.21.x** that locks accounts to IPs so little gremlins can’t just hack accounts and use them.  
+[![Download on Modrinth](https://img.shields.io/modrinth/dt/katipauth?logo=modrinth)](https://modrinth.com/plugin/katipauth) [![GitHub](https://img.shields.io/github/v/release/oiupoyt/katIPAuth)](https://github.com/oiupoyt/katIPAuth)
+
+**KatIPAuth** is a Paper plugin for **Minecraft 1.19 to 1.21.x** that locks accounts to IPs so little gremlins can’t just hack accounts and use them.  
 No passwords. No auth plugins. Just **IP says yes or go home**.
 
 Built for speed. Optimized. Async. Doesn’t freeze your server like half the plugins on Spigot.
+
+## 📥 Downloads
+
+- **Modrinth**: [Download from Modrinth](https://modrinth.com/plugin/katipauth)
+- **GitHub Releases**: [Download from GitHub](https://github.com/oiupoyt/katIPAuth/releases)
 
 ---
 
@@ -41,6 +48,10 @@ Sends a clean embed with:
 - Server name  
 
 So you can watch account theft attempts like a Netflix series.
+
+### 🔄 Automatic Update Checking
+- Checks for updates on startup from GitHub
+- Sends a console message if a new version is available
 
 ### ⚡ Performance
 - **Async disk I/O**
@@ -87,6 +98,9 @@ So you can watch account theft attempts like a Netflix series.
 discord:
   webhook: "YOUR_DISCORD_WEBHOOK_URL"
 
+privacy:
+  mask-ips: false  # If true, last two octets of IPs will be replaced with x (e.g. 192.168.xx.xx)
+
 messages:
   blocked: "&cLogin blocked: IP mismatch. Contact staff if this is wrong."
 ```
@@ -104,3 +118,6 @@ messages:
 - A: Different goal. AuthMe = passwords.
 - KatIPAuth = identity locking using yo ip.
 - Use both if you’re paranoid lmao.
+
+### Q: Does this plugin check for updates?
+- A: Yes, it automatically checks GitHub for new versions on startup and logs a message if an update is available, directing you to Modrinth for downloads. This can be disabled in the config.
