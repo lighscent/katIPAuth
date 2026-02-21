@@ -12,7 +12,8 @@ public class IPInfoCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender s, Command c, String l, String[] a) {
-        if (!s.isOp() || a.length != 1) return true;
+        if (!s.hasPermission("ipauth.admin") || a.length != 1)
+            return true;
 
         IPStorage.Entry e = storage.get(a[0]);
         if (e == null) {
